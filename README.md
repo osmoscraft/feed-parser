@@ -11,7 +11,7 @@ npm i @osmoscraft/web-feed-parser
 ```TypeScript
 import { WebFeedParser } from "@osmoscraft/web-feed-parser";
 
-const input = "<xml>..." // feed content in XML string
+const input = "<?xml..." // feed content in XML string
 
 const feedParser = new WebFeedParser();
 const output = feedParser.toJsonFeed(input);
