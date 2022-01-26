@@ -42,7 +42,7 @@ export const rssParser: XmlFeedParser = {
         itemChildren.find((node) => node.tagName === "guid")?.textContent ??
         itemChildren.find((node) => node.tagName === "link")?.textContent ??
         "",
-      url: itemChildren.find((node) => node.tagName === "link")?.textContent ?? undefined,
+      url: itemChildren.find((node) => node.tagName === "link")?.textContent?.trim() ?? undefined,
       title: decodedTitle,
       summary: summaryNode?.text() ?? contentNode?.text() ?? undefined,
       content_html: (contentNode?.html() ?? summaryNode?.html() ?? "").trim(),
@@ -99,7 +99,11 @@ export const atomParser: XmlFeedParser = {
         itemChildren.find((node) => node.tagName === "id")?.textContent ??
         itemChildren.find((node) => node.tagName === "link")?.getAttribute("href") ??
         "",
-      url: itemChildren.find((node) => node.tagName === "link")?.getAttribute("href") ?? undefined,
+      url:
+        itemChildren
+          .find((node) => node.tagName === "link")
+          ?.getAttribute("href")
+          ?.trim() ?? undefined,
       title: decodedTitle ?? undefined,
       summary: summaryNode?.text() ?? contentNode?.text() ?? undefined,
       content_html: contentNode?.html() ?? summaryNode?.html() ?? "",
