@@ -1,6 +1,6 @@
 # Web Feed Parser
 
-Parse RSS/RDF/Atom XML [JSON Feed](https://www.jsonfeed.org/) in a browser environment
+Parse RSS/RDF/Atom XML into [JSON Feed](https://www.jsonfeed.org/) in a browser environment
 
 ## Get started
 
