@@ -1,4 +1,4 @@
-import { WebFeedParser } from "../";
+import { WebFeedParser } from "..";
 
 export function myParseFeed(input: string) {
   const feedParser = new WebFeedParser();
