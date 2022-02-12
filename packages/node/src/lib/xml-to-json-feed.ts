@@ -1,7 +1,7 @@
+import type { JsonFeed, JsonFeedItem } from "@osmoscraft/json-feed-types";
 import type { Document, Element } from "cheerio";
 import cheerio, { Cheerio } from "cheerio";
 import * as htmlparser2 from "htmlparser2";
-import type { JsonFeed, JsonFeedItem } from "../typings";
 
 export interface JsonFeedParser {
   isMatch: (root: Cheerio<Document>) => boolean;

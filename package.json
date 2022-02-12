@@ -24,6 +24,7 @@
     "./packages/*"
   ],
   "devDependencies": {
+    "@types/node": "^16.11.24",
     "concurrently": "^7.0.0",
     "prettier": "^2.5.1"
   }

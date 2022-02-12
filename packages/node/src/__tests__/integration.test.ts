@@ -1,6 +1,6 @@
+import type { JsonFeed } from "@osmoscraft/json-feed-types";
 import { describe, expect, it } from "vitest";
 import { atomParser, rssParser, xmlToJsonFeed } from "..";
-import type { JsonFeed } from "../typings";
 import { loadXmlFixture } from "../__fixtures__/test-helper/load-fixture";
 
 describe("Integration", () => {

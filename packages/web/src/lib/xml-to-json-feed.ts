@@ -1,5 +1,4 @@
-import { JsonFeed } from "../typings";
-import { JsonFeedItem } from "../typings/json-feed";
+import { JsonFeed, JsonFeedItem } from "@osmoscraft/json-feed-types";
 
 export interface JsonFeedParser {
   isMatch: (root: Document) => boolean;

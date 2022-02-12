@@ -20,6 +20,8 @@
   "homepage": "https://github.com/osmoscraft/web-feed-parser#readme",
   "devDependencies": {
     "@osmoscraft/web-testing-library": "^0.0.1",
+    "@osmoscraft/json-feed-types": "^0.0.1",
     "vite": "^2.7.2"
-  }
+  },
+  "dependencies": {}
 }
