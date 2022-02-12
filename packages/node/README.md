@@ -18,7 +18,3 @@ const input = "<?xml..." // feed content in XML string
 const feedParser = new NodeFeedParser();
 const output = feedParser.toJsonFeed(input);
 ```
-
-## Related
-
-- [Web Feed Parser](https://github.com/osmoscraft/web-feed-parser). Same functionality, but running in the browser environment.
