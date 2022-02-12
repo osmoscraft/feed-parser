@@ -1,6 +1,6 @@
 import { reportSummary } from "@osmoscraft/web-testing-library";
-import { testParseChannel } from "./feed-parser/tests/parse-channel.test";
-import { testParseItems } from "./feed-parser/tests/parse-items.test";
+import { testParseChannel } from "./tests/parse-channel.test";
+import { testParseItems } from "./tests/parse-items.test";
 
 async function testAll() {
   const start = performance.now();

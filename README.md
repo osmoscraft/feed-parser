@@ -2,6 +2,8 @@
 
 Parse RSS/RDF/Atom XML [JSON Feed](https://www.jsonfeed.org/) in a browser environment
 
+Note: This library only exports TypeScript. So you will need a modern compiler to use it. Currently only supporting [vite](https://vitejs.dev/) and [esbuild](https://esbuild.github.io/).
+
 ## Get started
 
 ```sh
@@ -17,6 +19,6 @@ const feedParser = new WebFeedParser();
 const output = feedParser.toJsonFeed(input);
 ```
 
-## Quirk
+## Related
 
-JSON Feed does not specify how to represent timestamp on the Channel level. This library provides them under `_ext.date_modified` and `_ext.date_published`, which is compliant with JSON Feed extensibility guideline.
+- [Node Feed Parser](https://github.com/osmoscraft/node-feed-parser). Same functionality, but running in the node.js environment.

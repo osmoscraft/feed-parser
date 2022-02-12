@@ -1,6 +1,6 @@
-import type { XmlFeedParser } from "./xml-to-json-feed";
+import type { JsonFeedParser } from "./xml-to-json-feed";
 
-export const rssParser: XmlFeedParser = {
+export const rssParser: JsonFeedParser = {
   isMatch: (root) => ["rss", "rdf:RDF"].includes(root.children?.[0]?.tagName),
   selectChannel: (root) => root.getElementsByTagName("channel")[0],
   selectItems: (root) => root.getElementsByTagName("item"),
@@ -61,7 +61,7 @@ export const rssParser: XmlFeedParser = {
   },
 };
 
-export const atomParser: XmlFeedParser = {
+export const atomParser: JsonFeedParser = {
   isMatch: (root) => root.children?.[0]?.tagName === "feed",
   selectChannel: (root) => root.getElementsByTagName("feed")[0],
   selectItems: (root) => root.getElementsByTagName("entry"),
