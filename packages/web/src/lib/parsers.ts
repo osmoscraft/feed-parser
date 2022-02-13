@@ -5,12 +5,6 @@ export const rssParser: JsonFeedParser = {
   selectChannel: (root) => root.getElementsByTagName("channel")[0],
   selectItems: (root) => root.getElementsByTagName("item"),
   resolveChannel: (channel) => {
-    const publishDate =
-      channel.getElementsByTagName("pubDate")[0]?.textContent ??
-      channel.getElementsByTagName("dc:date")[0]?.textContent;
-    const modifiedhDate =
-      channel.getElementsByTagName("lastBuildDate")[0]?.textContent ??
-      channel.getElementsByTagName("dc:date")[0]?.textContent;
     const channelChildren = [...channel.children];
 
     return {
@@ -23,10 +17,6 @@ export const rssParser: JsonFeedParser = {
         channel.getElementsByTagName("image")[0]?.getAttribute("rdf:resource") ??
         undefined,
       items: [],
-      _ext: {
-        date_published: coerceError(() => new Date(publishDate ?? modifiedhDate ?? "").toISOString()),
-        date_modified: coerceError(() => new Date(modifiedhDate ?? publishDate ?? "").toISOString()),
-      },
     };
   },
   resolveItem: (item, _channel) => {
@@ -56,7 +46,6 @@ export const rssParser: JsonFeedParser = {
           ?.getAttribute("rdf:resource") ??
         undefined,
       date_published: coerceError(() => new Date(date ?? "").toISOString()),
-      date_modified: coerceError(() => new Date(date ?? "").toISOString()),
     };
   },
 };
@@ -67,7 +56,6 @@ export const atomParser: JsonFeedParser = {
   selectItems: (root) => root.getElementsByTagName("entry"),
   resolveChannel: (channel) => {
     const channelChildren = [...channel.children];
-    const date = channelChildren.find((node) => node.tagName === "updated")?.textContent ?? undefined;
     const homeUrl =
       channelChildren
         .find((node) => node.tagName === "link" && node.getAttribute("rel") !== "self")
@@ -80,10 +68,6 @@ export const atomParser: JsonFeedParser = {
       home_page_url: homeUrl,
       icon: channelChildren.find((node) => node.tagName === "icon")?.textContent ?? undefined,
       items: [],
-      _ext: {
-        date_published: date ? coerceError(() => new Date(date).toISOString()) : undefined,
-        date_modified: date ? coerceError(() => new Date(date).toISOString()) : undefined,
-      },
     };
   },
   resolveItem: (item, _channel) => {
@@ -109,8 +93,8 @@ export const atomParser: JsonFeedParser = {
       content_html: contentNode?.html() ?? summaryNode?.html() ?? "",
       content_text: contentNode?.text() ?? summaryNode?.text() ?? "",
       image: item.querySelector(`:scope > link[rel="enclosure"][type^="image"]`)?.getAttribute("href") ?? undefined,
-      date_published: coerceError(() => new Date(publishedDate ?? modifedDate ?? "").toISOString()),
-      date_modified: coerceError(() => new Date(modifedDate ?? publishedDate ?? "").toISOString()),
+      date_published: coerceError(() => new Date(publishedDate ?? "").toISOString()),
+      date_modified: coerceError(() => new Date(modifedDate ?? "").toISOString()),
     };
   },
 };

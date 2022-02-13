@@ -18,7 +18,7 @@ export const testParseChannel = describe("Parse channel", () => {
     await expect(result.items).toEqual([]);
     await expect(
       Object.keys(Object.fromEntries(Object.entries(result).filter((entry) => entry[1] !== undefined))).sort()
-    ).toEqual(["_ext", "items", "title", "version"]);
+    ).toEqual(["items", "title", "version"]);
   });
 
   it("Missing fields/RDF", async () => {
@@ -33,7 +33,7 @@ export const testParseChannel = describe("Parse channel", () => {
     await expect(result.items).toEqual([]);
     await expect(
       Object.keys(Object.fromEntries(Object.entries(result).filter((entry) => entry[1] !== undefined))).sort()
-    ).toEqual(["_ext", "items", "title", "version"]);
+    ).toEqual(["items", "title", "version"]);
   });
 
   it("Missing fields/Atom", async () => {
@@ -46,7 +46,7 @@ export const testParseChannel = describe("Parse channel", () => {
     await expect(result.items).toEqual([]);
     await expect(
       Object.keys(Object.fromEntries(Object.entries(result).filter((entry) => entry[1] !== undefined))).sort()
-    ).toEqual(["_ext", "items", "title", "version"]);
+    ).toEqual(["items", "title", "version"]);
   });
 
   it("JSON Feed version/RSS", async () => {
@@ -214,87 +214,5 @@ export const testParseChannel = describe("Parse channel", () => {
     `);
 
     await expect(result.icon).toEqual("http://mock-domain.com/channel-image.png");
-  });
-
-  it("Channel timestamps/No date/RSS2", async () => {
-    const result = myParseFeed(`
-      <?xml version="1.0"?>
-      <rss>
-        <channel>
-        </channel>
-      </rss>
-    `);
-
-    await expect(result._ext.date_published).toEqual(undefined);
-    await expect(result._ext.date_modified).toEqual(undefined);
-  });
-
-  it("Channel timestamps/Publish only/RSS2", async () => {
-    const result = myParseFeed(`
-      <?xml version="1.0"?>
-      <rss>
-        <channel>
-          <pubDate>Sat, 01 Jan 2000 00:00:00 GMT</pubDate>
-        </channel>
-      </rss>
-    `);
-
-    await expect(result._ext.date_published).toEqual("2000-01-01T00:00:00.000Z");
-    await expect(result._ext.date_modified).toEqual("2000-01-01T00:00:00.000Z");
-  });
-
-  it("Channel timestamps/Update only/RSS", async () => {
-    const result = myParseFeed(`
-      <?xml version="1.0"?>
-      <rss>
-        <channel>
-          <lastBuildDate>Tue, 12 Dec 2000 12:12:12 GMT</lastBuildDate>
-        </channel>
-      </rss>
-    `);
-
-    await expect(result._ext.date_published).toEqual("2000-12-12T12:12:12.000Z");
-    await expect(result._ext.date_modified).toEqual("2000-12-12T12:12:12.000Z");
-  });
-
-  it("Channel timestamps/Publish and update/RSS2", async () => {
-    const result = myParseFeed(`
-      <?xml version="1.0"?>
-      <rss>
-        <channel>
-          <pubDate>Sat, 01 Jan 2000 00:00:00 GMT</pubDate>
-          <lastBuildDate>Tue, 12 Dec 2000 12:12:12 GMT</lastBuildDate>
-        </channel>
-      </rss>
-    `);
-
-    await expect(result._ext.date_published).toEqual("2000-01-01T00:00:00.000Z");
-    await expect(result._ext.date_modified).toEqual("2000-12-12T12:12:12.000Z");
-  });
-
-  it("Channel timestamps/RDF", async () => {
-    const result = myParseFeed(`
-      <?xml version="1.0"?>
-      <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
-        <channel rdf:about="http://mock-domain.com/rss">
-          <dc:date>2000-12-12T12:12:12Z</dc:date>
-        </channel>
-      </rdf:RDF>
-    `);
-
-    await expect(result._ext.date_published).toEqual("2000-12-12T12:12:12.000Z");
-    await expect(result._ext.date_modified).toEqual("2000-12-12T12:12:12.000Z");
-  });
-
-  it("Channel timestamps/Atom", async () => {
-    const result = myParseFeed(`
-      <?xml version="1.0"?>
-      <feed xmlns="http://www.w3.org/2005/Atom">
-        <updated>2000-12-12T12:12:12Z</updated>
-      </feed>
-    `);
-
-    await expect(result._ext.date_published).toEqual("2000-12-12T12:12:12.000Z");
-    await expect(result._ext.date_modified).toEqual("2000-12-12T12:12:12.000Z");
   });
 });

@@ -640,7 +640,6 @@ export const testParseItems = describe("Parse items", () => {
     `);
 
     await expect(result.items[0].date_published).toEqual("2000-01-01T00:00:00.000Z");
-    await expect(result.items[0].date_modified).toEqual("2000-01-01T00:00:00.000Z");
   });
 
   it("Timestamps/RDF", async () => {
@@ -656,7 +655,6 @@ export const testParseItems = describe("Parse items", () => {
     `);
 
     await expect(result.items[0].date_published).toEqual("2000-01-01T00:00:00.000Z");
-    await expect(result.items[0].date_modified).toEqual("2000-01-01T00:00:00.000Z");
   });
 
   it("Timestamps/Publish only/Atom", async () => {
@@ -670,7 +668,6 @@ export const testParseItems = describe("Parse items", () => {
     `);
 
     await expect(result.items[0].date_published).toEqual("2000-01-01T00:00:00.000Z");
-    await expect(result.items[0].date_modified).toEqual("2000-01-01T00:00:00.000Z");
   });
 
   it("Timestamps/Update only/Atom", async () => {
@@ -683,7 +680,6 @@ export const testParseItems = describe("Parse items", () => {
       </feed>
     `);
 
-    await expect(result.items[0].date_published).toEqual("2000-12-12T12:12:12.000Z");
     await expect(result.items[0].date_modified).toEqual("2000-12-12T12:12:12.000Z");
   });
 
