@@ -8,9 +8,6 @@ export const rssParser: JsonFeedParser = {
   selectChannel: (root) => root.find("channel"),
   selectItems: (root) => root.find("item"),
   resolveChannel: (channel) => {
-    const publishDate = coerceEmptyString(channel.find("pubDate,dc\\:date").first().text());
-    const modifiedhDate = coerceEmptyString(channel.find("lastBuildDate,dc\\:date").first().text());
-
     return {
       version: "https://jsonfeed.org/version/1.1",
       title: parseXmlNode(channel.find("> title")).text(),
@@ -20,10 +17,6 @@ export const rssParser: JsonFeedParser = {
         coerceEmptyString(channel.find("> image url").text()) ??
         channel.find("image[rdf\\:resource]").attr("rdf:resource"),
       items: [],
-      _ext: {
-        date_published: coerceError(() => new Date(publishDate ?? modifiedhDate ?? "").toISOString()),
-        date_modified: coerceError(() => new Date(modifiedhDate ?? publishDate ?? "").toISOString()),
-      },
     };
   },
   resolveItem: (item, _channel) => {
@@ -44,7 +37,6 @@ export const rssParser: JsonFeedParser = {
         item.find(`> enc\\:enclosure[enc\\:type^="image"]`).attr("rdf:resource") ??
         undefined,
       date_published: coerceError(() => new Date(date ?? "").toISOString()),
-      date_modified: coerceError(() => new Date(date ?? "").toISOString()),
     };
   },
 };
@@ -54,8 +46,6 @@ export const atomParser: JsonFeedParser = {
   selectChannel: (root) => root.find("feed"),
   selectItems: (root) => root.find("entry"),
   resolveChannel: (channel) => {
-    const date = coerceEmptyString(channel.find("> updated").text());
-
     return {
       version: "https://jsonfeed.org/version/1.1",
       title: parseAtomNode(channel.find("> title")).text(),
@@ -63,10 +53,6 @@ export const atomParser: JsonFeedParser = {
       home_page_url: channel.find(`> link:not([rel="self"])`).attr("href"),
       icon: coerceEmptyString(channel.find("> icon").text()),
       items: [],
-      _ext: {
-        date_published: date ? coerceError(() => new Date(date).toISOString()) : undefined,
-        date_modified: date ? coerceError(() => new Date(date).toISOString()) : undefined,
-      },
     };
   },
   resolveItem: (item: Cheerio<Element>, _channel: Cheerio<Element>) => {
@@ -84,8 +70,8 @@ export const atomParser: JsonFeedParser = {
       content_html: coerceEmptyString(decodedContent.html()) ?? coerceEmptyString(decodedSummary.html(), ""),
       content_text: coerceEmptyString(decodedContent.text()) ?? coerceEmptyString(decodedSummary.text(), ""),
       image: item.find(`> link[rel="enclosure"][type^="image"]`).attr("href"),
-      date_published: coerceError(() => new Date(publishedDate ?? modifedDate ?? "").toISOString()),
-      date_modified: coerceError(() => new Date(modifedDate ?? publishedDate ?? "").toISOString()),
+      date_published: coerceError(() => new Date(publishedDate ?? "").toISOString()),
+      date_modified: coerceError(() => new Date(modifedDate ?? "").toISOString()),
     };
   },
 };
