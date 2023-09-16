@@ -25,7 +25,7 @@ export const rssParser: JsonFeedParser = {
     const decodedTitle = parseChildByTagName(item, "title")?.text();
     const summaryNode = parseChildByTagName(item, "description");
     const contentNode = parseChildByTagName(item, "content:encoded");
-    const date = itemChildren.find((node) => ["pubDate", "dc:date"].includes(node.tagName))?.textContent ?? "";
+    const date = itemChildren.find((node) => ["pubDate", "dc:date"].includes(node.tagName))?.textContent?.trim() ?? "";
 
     return {
       id:
